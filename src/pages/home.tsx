@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { AgendamentosList } from "../components/agendamentos-list";
 import type { Agendamento } from "../types/agendamentos";
 
-export function Home() {
+interface HomeProps {
+  agendamentos: Agendamento[];
+  removeAgendamentos: (id: number) => void;
+}
+
+export function Home({ removeAgendamentos }: HomeProps) {
     const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -35,17 +40,17 @@ export function Home() {
         <div>
             <h1 className="titulo">Meus Agendamentos</h1>
             <div className="flex flex-col items-center">
+                <Link
+                    to="/agendamentos/novo-agendamento"
+                    className="bg-[#0077c8] p-2 rounded-lg text-white mb-4"
+                >
+                    Novo Agendamento
+                </Link>
                 <AgendamentosList
                     agendamentos={agendamentos}
                     removeAgendamentos={(id) => setAgendamentos((prev) => prev.filter(a => a.id !== id))}
                 />
 
-                <Link
-                    to="/agendamentos/novo-agendamento"
-                    className="bg-[#0077c8] p-2 rounded-lg text-white mt-4"
-                >
-                    Novo Agendamento
-                </Link>
             </div>
         </div>
     );

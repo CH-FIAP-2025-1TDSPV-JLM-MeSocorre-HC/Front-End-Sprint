@@ -3,11 +3,17 @@ import { AgendamentosForm } from "../components/agendamentos-form";
 import type { Agendamento } from "../types/agendamentos";
 import { useNavigate } from "react-router-dom";
 
-export function NovoAgendamento() {
+interface NovoAgendamentoProps {
+  agendamentos: Agendamento[];
+  onAdd: (nova: Agendamento) => void;
+}
+
+export function NovoAgendamento({ agendamentos, onAdd }: NovoAgendamentoProps) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  async function onAdd(agendamento: Agendamento) {
+  // Função que cria o agendamento via API e também atualiza o estado do App
+  async function handleAdd(agendamento: Agendamento) {
     try {
       setLoading(true);
       const response = await fetch(`${import.meta.env.VITE_API_CHALLENGE}/agendamentos`, {
@@ -20,6 +26,9 @@ export function NovoAgendamento() {
 
       const data: Agendamento = await response.json();
       console.log("Agendamento criado:", data);
+
+      // Atualiza o estado do App
+      onAdd(data);
 
       navigate("/"); // volta para a Home
     } catch (error) {
@@ -36,7 +45,7 @@ export function NovoAgendamento() {
       {loading ? (
         <p>Salvando agendamento...</p>
       ) : (
-        <AgendamentosForm onAdd={onAdd} />
+        <AgendamentosForm onAdd={handleAdd} />
       )}
     </div>
   );

@@ -6,6 +6,7 @@ import { lazy, Suspense, useCallback, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Fallback } from "./components/fallback";
 import { Loading } from "./components/loading";
+import { AgendamentosRemarcar } from "./pages/agendamentos-remarcar";
 
 const Home = lazy(() =>
   import("./pages/home").then((m) => ({default: m.Home})))
@@ -100,6 +101,8 @@ function App() {
                 onAdd={addTeleconsulta}
               />} />
               <Route path="/agendamentos/:id" />
+
+              <Route path="/agendamentos/remarcar/:id" element={<AgendamentosRemarcar />} />
 
               <Route path="/teleconsultas/:id" element={<TeleconsultaDetails teleconsultas={teleconsultas}/>}/>
 

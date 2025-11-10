@@ -1,8 +1,9 @@
 import type { Agendamento } from "../types/agendamentos";
+import { useNavigate } from "react-router-dom";
 
 interface AgendamentosResumeProps {
   agendamentos: Agendamento[];
-  removeAgendamento: (id: number) => void; // função para atualizar o estado local após DELETE
+  removeAgendamento: (id: number) => void;
 }
 
 function formatDate(isoDate: string): string {
@@ -14,6 +15,8 @@ function formatTime(isoDate: string): string {
 }
 
 export function AgendamentosResume({ agendamentos, removeAgendamento }: AgendamentosResumeProps) {
+  const navigate = useNavigate();
+
   async function handleDelete(id: number) {
     if (!confirm("Deseja realmente remover este agendamento?")) return;
 
@@ -24,7 +27,6 @@ export function AgendamentosResume({ agendamentos, removeAgendamento }: Agendame
 
       if (!response.ok) throw new Error("Erro ao deletar agendamento");
 
-      // atualiza a lista local após remover
       removeAgendamento(id);
     } catch (error) {
       console.error(error);
@@ -32,13 +34,14 @@ export function AgendamentosResume({ agendamentos, removeAgendamento }: Agendame
     }
   }
 
+  function handleRemarcar(agendamento: Agendamento) {
+    navigate(`/agendamentos/remarcar/${agendamento.id}`, { state: { agendamento } });
+  }
+
   return (
     <div className="flex flex-col gap-4 w-full">
       {agendamentos.map((agendamento) => (
-        <div
-          key={agendamento.id}
-          className="flex bg-gray-100 rounded-xl min-h-20 w-full"
-        >
+        <div key={agendamento.id} className="flex bg-gray-100 rounded-xl min-h-20 w-full">
           <div className="basis-full rounded-s-xl p-4">
             <h2 className="font-bold text-[#009aa1] text-2xl mb-2">{agendamento.nomeConsulta}</h2>
             <div className="text-gray-600">
@@ -58,12 +61,7 @@ export function AgendamentosResume({ agendamentos, removeAgendamento }: Agendame
               {agendamento.tipo === "ONLINE" && agendamento.link && (
                 <p>
                   <span className="font-semibold">Link:</span>{" "}
-                  <a
-                    href={agendamento.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 underline"
-                  >
+                  <a href={agendamento.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
                     Acessar consulta
                   </a>
                 </p>
@@ -78,12 +76,21 @@ export function AgendamentosResume({ agendamentos, removeAgendamento }: Agendame
             <p className="mb-2">
               <span className="font-semibold text-[#009aa1]">Horário:</span> {formatTime(agendamento.dataHora)}
             </p>
-            <button
-              onClick={() => handleDelete(agendamento.id)}
-              className="mt-2 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-            >
-              Remover
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleRemarcar(agendamento)}
+                className="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                Remarcar
+              </button>
+
+              <button
+                onClick={() => handleDelete(agendamento.id)}
+                className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                Remover
+              </button>
+            </div>
           </div>
         </div>
       ))}

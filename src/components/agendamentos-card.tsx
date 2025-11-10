@@ -9,10 +9,10 @@ export function AgendamentosCard({ agendamento }: AgendamentosCardProps) {
 
   return (
     <div className="bg-white shadow rounded-lg p-4 w-3/5">
-      <h2>{agendamento.nomeConsulta}</h2>
+      <h2>{agendamento.tipo}</h2>
       <p>Data: {data}</p>
       <p>Horário: {hora}</p>
-      <p>Tipo: {agendamento.tipo}</p>
+      <p>Especialidade: {agendamento.medico}</p>
       <p>Profissional: {agendamento.nomeProfissional}</p>
     </div>
   );

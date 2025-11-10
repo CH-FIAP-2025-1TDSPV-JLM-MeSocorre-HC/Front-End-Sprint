@@ -6,7 +6,7 @@ export interface Agendamento {
   nomeProfissional: string; // vem do banco, selecionado via label
   medico: string;
   pacienteId: number;
-  link?: string; // para agendamentos online
-  tipoExame?: string; // para exames
-  resultadoExame?: string; // para exames
+  link?: string | null; // para agendamentos online
+  tipoExame?: string | null; // para exames
+  resultadoExame?: string | null; // para exames
 }
