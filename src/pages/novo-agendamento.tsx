@@ -8,7 +8,7 @@ interface NovoAgendamentoProps {
   onAdd: (nova: Agendamento) => void;
 }
 
-export function NovoAgendamento({ agendamentos, onAdd }: NovoAgendamentoProps) {
+export function NovoAgendamento({ onAdd }: NovoAgendamentoProps) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 

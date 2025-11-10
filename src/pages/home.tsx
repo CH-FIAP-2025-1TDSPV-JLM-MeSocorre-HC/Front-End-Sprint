@@ -8,7 +8,7 @@ interface HomeProps {
   removeAgendamentos: (id: number) => void;
 }
 
-export function Home({ removeAgendamentos }: HomeProps) {
+export function Home({  }: HomeProps) {
     const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
     const [loading, setLoading] = useState(true);
 
