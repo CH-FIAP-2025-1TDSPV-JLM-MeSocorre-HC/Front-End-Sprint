@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from './components/layout';
 import type { Teleconsulta as TeleconsultaType } from "./types/teleconsulta";
-import type { Agendamentos as AgendamentoType} from "./types/agendamentos"
+import type { Agendamento as AgendamentoType} from "./types/agendamentos"
 import { lazy, Suspense, useCallback, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Fallback } from "./components/fallback";
@@ -59,7 +59,7 @@ function App() {
     setAgendamentos((prev) => [...prev, nova]);
   }, []);
 
-  const removeAgendamento = useCallback((id: string) => {
+  const removeAgendamento = useCallback((id: number) => {
     setAgendamentos((prev) => prev.filter((t) => t.id !== id));
   }, []);
 

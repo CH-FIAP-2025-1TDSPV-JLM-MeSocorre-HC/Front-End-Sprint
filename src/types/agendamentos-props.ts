@@ -1,6 +1,6 @@
-import type { Agendamentos } from "./agendamentos";
+import type { Agendamento } from "./agendamentos";
 
 export interface AgendamentosProps {
-    agendamentos: Agendamentos[];
-    removeAgendamentos: (id: string) => void;
+    agendamentos: Agendamento[];
+    removeAgendamentos: (id: number) => void;
 }

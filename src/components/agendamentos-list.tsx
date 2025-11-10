@@ -1,20 +1,16 @@
-import type { Agendamentos } from "../types/agendamentos";
+import type { Agendamento } from "../types/agendamentos";
 import { AgendamentosResume } from "./agendamentos-resume";
 
 interface AgendamentosListProps {
-  agendamentos: Agendamentos[];
-  removeAgendamentos: (id: string) => void;
+  agendamentos: Agendamento[];
+  removeAgendamentos: (id: number) => void;
 }
 
 export function AgendamentosList({ agendamentos, removeAgendamentos }: AgendamentosListProps) {
   return (
-    <>
-      {agendamentos.map((value) => (
-        <AgendamentosResume 
-          removeAgendamentos={removeAgendamentos} 
-          agendamentos={value} 
-        />
-      ))}
-    </>
+    <AgendamentosResume 
+      agendamentos={agendamentos} 
+      removeAgendamento={removeAgendamentos} 
+    />
   );
 }
